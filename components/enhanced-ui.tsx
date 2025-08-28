@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useEffect, useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -8,6 +9,22 @@ import { Sparkles, Target, Rocket, Code2, Globe, ArrowRight, Calendar, Clock } f
 
 // Enhanced floating animation component
 export function FloatingElements() {
+  const [viewport, setViewport] = useState<{ width: number; height: number }>({ width: 1000, height: 800 })
+
+  useEffect(() => {
+    const updateSize = () => {
+      // Guard for environments where window is not defined (SSR/build)
+      if (typeof window === "undefined") return
+      setViewport({ width: window.innerWidth, height: window.innerHeight })
+    }
+
+    updateSize()
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", updateSize)
+      return () => window.removeEventListener("resize", updateSize)
+    }
+  }, [])
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {/* Animated background particles */}
@@ -16,12 +33,12 @@ export function FloatingElements() {
           key={i}
           className="absolute w-2 h-2 bg-primary/20 rounded-full"
           initial={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
+            x: Math.random() * viewport.width,
+            y: Math.random() * viewport.height,
           }}
           animate={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
+            x: Math.random() * viewport.width,
+            y: Math.random() * viewport.height,
           }}
           transition={{
             duration: Math.random() * 10 + 10,
