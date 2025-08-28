@@ -1,30 +1,50 @@
-# Hariharan portfolio
-
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+# Hariharan Portfolio (Next.js)
 
 [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/parthi525855-oss-projects/v0-hariharan-portfolio)
 [![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/cgxzAaQ7Tt0)
 
 ## Overview
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+Modern portfolio built with Next.js App Router, Tailwind CSS, and React Three Fiber.
+
+## Prerequisites
+
+- Node.js 18.18+ or 20+
+- pnpm 8+ (Corepack will auto-activate)
+
+## Local Development
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Then open `http://localhost:3000`.
+
+## Production Build
+
+```bash
+pnpm install --frozen-lockfile
+pnpm build
+pnpm start
+```
 
 ## Deployment
 
-Your project is live at:
+This project is optimized for Vercel:
 
-**[https://vercel.com/parthi525855-oss-projects/v0-hariharan-portfolio](https://vercel.com/parthi525855-oss-projects/v0-hariharan-portfolio)**
+- Uses Next.js 15 App Router
+- Disables SSR on the homepage to support WebGL/three.js (`window` usage)
+- Ignores TypeScript and ESLint errors during build in `next.config.mjs`
 
-## Build your app
+Steps:
 
-Continue building your app on:
+1. Push to GitHub
+2. Import the repo on Vercel and deploy
 
-**[https://v0.app/chat/projects/cgxzAaQ7Tt0](https://v0.app/chat/projects/cgxzAaQ7Tt0)**
+Environment variables: none required by default.
 
-## How It Works
+## Notes
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+- The 3D canvas is client-only to avoid SSR `window is not defined` during prerender.
+- Images are served unoptimized via Next.js `images.unoptimized` to simplify deploys.
