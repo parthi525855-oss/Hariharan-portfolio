@@ -3,6 +3,7 @@
 import { Canvas } from "@react-three/fiber"
 import { OrbitControls, Environment, Float, Text3D, Center } from "@react-three/drei"
 import { Suspense, useRef, useState } from "react"
+import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -78,6 +79,9 @@ function Scene3D() {
   )
 }
 
+// Avoid server-side rendering for three.js canvas
+const Scene3DNoSSR = dynamic(() => Promise.resolve(Scene3D), { ssr: false })
+
 // Skills data - enhanced with more relevant skills
 const skills = [
   { name: "Python", level: 85, icon: "🐍", description: "Data Science & AI Development" },
@@ -116,7 +120,7 @@ const achievements = [
   { title: "Open Source Contributor", description: "Contributing to educational technology projects", icon: "🌟" },
 ]
 
-export default function Portfolio() {
+function PortfolioPage() {
   const { scrollYProgress } = useScroll()
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
   const [activeSection, setActiveSection] = useState("hero")
@@ -159,7 +163,7 @@ export default function Portfolio() {
         <FloatingElements />
 
         <div className="absolute inset-0 z-0">
-          <Scene3D />
+          <Scene3DNoSSR />
         </div>
 
         <motion.div style={{ y }} className="relative z-10 text-center px-6">
@@ -562,3 +566,5 @@ export default function Portfolio() {
     </div>
   )
 }
+
+export default dynamic(() => Promise.resolve(PortfolioPage), { ssr: false })
